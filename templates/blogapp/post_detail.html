@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% block title %} {{ post.title }} | Blog {% endblock title %}
+
+{% block content %}
+<div class="container py-5" style="background-color: #f7f7f7; min-height: 100vh;">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0 rounded-4" style="background-color: #ffffffd9;">
+        <div class="card-body">
+          <h1 class="card-title text-primary">{{ post.title }}</h1>
+          <p class="card-subtitle mb-3 text-muted">
+            by {{ post.author }} • {{ post.created_at|date:"F d, Y" }}
+          </p>
+          <hr>
+          <p class="card-text mt-4" style="line-height: 1.7;">
+            {{ post.body|linebreaks }}
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

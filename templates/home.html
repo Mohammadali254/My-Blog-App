@@ -1,0 +1,30 @@
+{% extends '_base.html' %}
+
+{% block title %} Home | Blog {% endblock title %}
+
+{% block content %}
+<div class="container py-5" style="background-color: #f7f7f7; min-height: 100vh;">
+  <h1 class="text-center mb-5">Latest Posts</h1>
+
+  <p class="text-center text-muted">Total posts found: {{ posts.count }}</p>
+
+  <div class="row justify-content-center">
+    {% for post in posts %}
+      <div class="col-md-8 mb-4">
+        <div class="card shadow-sm border-0 rounded-4" style="background-color: #ffffffd9;"> <!-- translucent white -->
+          <div class="card-body">
+            <h3 class="card-title text-primary">{{ post.title }}</h3>
+            <p class="card-subtitle mb-2 text-muted">by {{ post.author }} • {{ post.created_at|date:"M d, Y" }}</p>
+            <p class="card-text mt-3">{{ post.body|truncatewords:50 }}</p>
+            <a href="{{ post.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="text-center">
+        <p class="text-muted">No posts have been created yet.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
