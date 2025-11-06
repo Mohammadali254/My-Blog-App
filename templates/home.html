@@ -15,6 +15,7 @@
           <div class="card-body">
             <h3 class="card-title text-primary">{{ post.title }}</h3>
             <p class="card-subtitle mb-2 text-muted">by {{ post.author }} • {{ post.created_at|date:"M d, Y" }}</p>
+            <hr>
             <p class="card-text mt-3">{{ post.body|truncatewords:50 }}</p>
             <a href="{{ post.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Read More</a>
           </div>

@@ -19,8 +19,15 @@
         </div>
       </div>
 
+      {% if user == post.author %}
       <div class="text-center mt-4">
-        <a href="{% url 'home' %}" class="btn btn-outline-primary">← Back to Home</a>
+        <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-warning px-4 me-2">✏️ Edit</a>
+        <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger px-4">🗑️ Delete</a>
+      </div>
+      {% endif %}
+
+      <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">← Back</a>
       </div>
     </div>
   </div>

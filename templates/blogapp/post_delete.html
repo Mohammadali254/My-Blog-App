@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+
+{% block title %}Delete Post{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header bg-danger text-white py-3">
+      <h2 class="mb-0 fw-bold">Confirm Delete</h2>
+    </div>
+    <div class="card-body">
+      <p>Are you sure you want to delete <strong>{{ post.title }}</strong>?</p>
+      <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger px-4 me-2">Yes, Delete</button>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary px-4">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
