@@ -6,10 +6,17 @@
 <div class="container py-5" style="background-color: #f7f7f7; min-height: 100vh;">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow-sm border-0 rounded-4" style="background-color: #ffffffd9;">
-        <div class="card-body">
-          <h1 class="card-title text-primary">{{ post.title }}</h1>
-          <p class="card-subtitle mb-3 text-muted">
+      <div class="card shadow-sm border-0 rounded-4 position-relative" style="background-color: #ffffffd9;">
+        <div class="card-body p-4">
+
+          <!-- 🔹 Back Button (top-left corner) -->
+          <div class="position-absolute" style="top: 15px; left: 15px;">
+            <a href="{% url 'home' %}" class="btn btn-outline-primary btn-sm">← Back</a>
+          </div>
+
+          <!-- Post content -->
+          <h1 class="card-title text-primary text-center mt-2">{{ post.title }}</h1>
+          <p class="card-subtitle mb-3 text-muted text-center">
             by {{ post.author }} • {{ post.created_at|date:"F d, Y" }}
           </p>
           <hr>
@@ -25,10 +32,6 @@
         <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger px-4">🗑️ Delete</a>
       </div>
       {% endif %}
-
-      <div class="text-center mt-4">
-        <a href="{% url 'home' %}" class="btn btn-outline-primary">← Back</a>
-      </div>
     </div>
   </div>
 </div>

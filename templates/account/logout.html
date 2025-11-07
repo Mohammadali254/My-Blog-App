@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% block title %}Confirm Logout | Blog{% endblock title %}
+
+{% block content %}
+<div class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow-sm border-0 rounded-4" style="max-width: 500px; width: 100%;">
+    <div class="card-body text-center p-4">
+      <h2 class="text-danger mb-3">Confirm Logout</h2>
+      <p class="text-muted mb-4">Are you sure you want to log out of your account?</p>
+
+      <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger w-100 mb-3">Yes, Log Me Out</button>
+      </form>
+
+      <a href="{% url 'home' %}" class="btn btn-outline-secondary w-100">Cancel</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
