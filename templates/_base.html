@@ -13,7 +13,7 @@
       <div class="container-fluid">
     
         {% if user.is_authenticated %}
-          <a class="navbar-brand d-flex align-items-center" href="#">
+          <a class="navbar-brand d-flex align-items-center">
             {% if user.profile_picture %}
               <img src="{{ user.profile_picture.url }}" 
                    alt="Profile" 
@@ -21,7 +21,7 @@
                    width="35" height="35" 
                    style="object-fit: cover;">
             {% else %}
-              <img src="{{ MEDIA_URL }}profile_pics/default.png" 
+              <img src="{% static 'profile_pics/blog.png' %}" 
                    alt="Default" 
                    class="rounded-circle me-2"
                    width="35" height="35" 

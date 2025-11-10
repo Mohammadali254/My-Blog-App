@@ -14,7 +14,7 @@ def profile_view(request):
         if form.is_valid():
             form.save()
             return redirect('profile')
-        else:
+    else:
             form = ProfileUpdatedForm(instance=request.user)
 
-        return render(request, 'accounts/profile.html', {'form': form})
+    return render(request, 'accounts/profile.html', {'form': form})
