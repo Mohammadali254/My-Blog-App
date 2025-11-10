@@ -9,12 +9,12 @@
       <div class="card shadow-sm border-0 rounded-4 position-relative" style="background-color: #ffffffd9;">
         <div class="card-body p-4">
 
-          <!-- 🔹 Back Button (top-left corner) -->
+          <!-- 🔹 Back Button -->
           <div class="position-absolute" style="top: 15px; left: 15px;">
             <a href="{% url 'home' %}" class="btn btn-outline-primary btn-sm">← Back</a>
           </div>
 
-          <!-- Post content -->
+          <!-- 🔹 Post content -->
           <h1 class="card-title text-primary text-center mt-2">{{ post.title }}</h1>
           <p class="card-subtitle mb-3 text-muted text-center">
             by {{ post.author }} • {{ post.created_at|date:"F d, Y" }}
@@ -23,16 +23,70 @@
           <p class="card-text mt-4" style="line-height: 1.7;">
             {{ post.body|linebreaks }}
           </p>
+
+          <!-- 🔹 Author-only controls -->
+          {% if user == post.author %}
+          <div class="text-center mt-4">
+            <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-warning px-4 me-2">✏️ Edit</a>
+            <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger px-4">🗑️ Delete</a>
+          </div>
+          {% endif %}
+
+          <!-- 🔹 Comments section -->
+          <hr>
+          <div class="mt-4">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">💬 Comments</h5>
+              <button class="btn btn-outline-secondary btn-sm" id="toggleCommentForm">
+                Add Comment
+              </button>
+            </div>
+
+            <!-- Existing comments -->
+            <div class="mt-3">
+              {% for comment in comments %}
+              <div class="card mb-3 border-0 shadow-sm">
+                <div class="card-body">
+                  <strong>{{ comment.author }}</strong>
+                  <p class="text-muted mb-1" style="font-size: 0.9rem;">{{ comment.created_at|date:"F d, Y H:i" }}</p>
+                  <p>{{ comment.body }}</p>
+                </div>
+              </div>
+              {% empty %}
+              <p class="text-muted">No comments yet. Be the first to comment!</p>
+              {% endfor %}
+            </div>
+
+            <!-- Hidden comment form -->
+            {% if user.is_authenticated %}
+            <form method="post" id="commentForm" class="mt-4" style="display: none;">
+              {% csrf_token %}
+              {{ form.body }}
+              <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+            </form>
+            {% else %}
+            <p class="text-muted mt-4">
+              <a href="{% url 'account_login' %}">Login</a> to post a comment.
+            </p>
+            {% endif %}
+          </div>
         </div>
       </div>
-
-      {% if user == post.author %}
-      <div class="text-center mt-4">
-        <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-warning px-4 me-2">✏️ Edit</a>
-        <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger px-4">🗑️ Delete</a>
-      </div>
-      {% endif %}
     </div>
   </div>
 </div>
+
+<!-- 🔹 Toggle Comment Form Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtn = document.getElementById("toggleCommentForm");
+    const form = document.getElementById("commentForm");
+
+    if (toggleBtn && form) {
+      toggleBtn.addEventListener("click", function() {
+        form.style.display = form.style.display === "none" ? "block" : "none";
+      });
+    }
+  });
+</script>
 {% endblock %}

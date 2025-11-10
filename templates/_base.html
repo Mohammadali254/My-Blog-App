@@ -11,25 +11,52 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        
+    
         {% if user.is_authenticated %}
-        <a class="navbar-brand" href="#">{{ user.username }}</a>
-        <a class="navbar-brand text-primary fw-bold" href="{% url "post_create" %}" style="text-shadow: 0 0 3px rgba(13, 110, 253, 0.6);"> New + </a>
+          <a class="navbar-brand d-flex align-items-center" href="#">
+            {% if user.profile_picture %}
+              <img src="{{ user.profile_picture.url }}" 
+                   alt="Profile" 
+                   class="rounded-circle me-2"
+                   width="35" height="35" 
+                   style="object-fit: cover;">
+            {% else %}
+              <img src="{{ MEDIA_URL }}profile_pics/default.png" 
+                   alt="Default" 
+                   class="rounded-circle me-2"
+                   width="35" height="35" 
+                   style="object-fit: cover;">
+            {% endif %}
+            <span class="fw-semibold text-light">{{ user.username }}</span>
+          </a>
+          <a class="navbar-brand text-primary fw-bold" href="{% url 'post_create' %}" 
+             style="text-shadow: 0 0 3px rgba(13, 110, 253, 0.6);">
+             New +
+          </a>
+        {% endif %}
+    
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+    
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link active" href="{% url "account_logout" %}">Log Out</a></li>
-
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'account_logout' %}">Log Out</a>
+              </li>
             {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url "account_login" %}">Log In</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
+              </li>
             {% endif %}
           </ul>
         </div>
       </div>
     </nav>
+    
+    
 
     {% if messages %}
   <div class="container mt-3">

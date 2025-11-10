@@ -3,6 +3,7 @@
 {% block title %} Home | Blog {% endblock title %}
 
 {% block content %}
+
 <div class="container py-5" style="background-color: #f7f7f7; min-height: 100vh;">
   <h1 class="text-center mb-5">Latest Posts</h1>
 
@@ -11,13 +12,24 @@
   <div class="row justify-content-center">
     {% for post in posts %}
       <div class="col-md-8 mb-4">
-        <div class="card shadow-sm border-0 rounded-4" style="background-color: #ffffffd9;"> <!-- translucent white -->
+        <div class="card mb-4 shadow-sm border-0 rounded-4" style="background-color: #ffffffd9;">
           <div class="card-body">
             <h3 class="card-title text-primary">{{ post.title }}</h3>
-            <p class="card-subtitle mb-2 text-muted">by {{ post.author }} • {{ post.created_at|date:"M d, Y" }}</p>
+            <p class="text-muted mb-2">
+              by {{ post.author }} • {{ post.created_at|date:"M d, Y" }}
+            </p>
             <hr>
             <p class="card-text mt-3">{{ post.body|truncatewords:50 }}</p>
-            <a href="{{ post.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Read More</a>
+
+            <!-- Read More + Comment Count Row -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <a href="{% url 'post_detail' post.id %}" class="btn btn-outline-primary btn-sm">Read more →</a>
+              
+              <span class="badge bg-light text-dark">
+                💬 {{ post.comments.count }} {{ post.comments.count|pluralize:"Comment,Comments" }}
+              </span>
+              
+            </div>
           </div>
         </div>
       </div>

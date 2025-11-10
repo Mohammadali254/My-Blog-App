@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+{% block title %}Profile | Blog{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="max-width: 500px;">
+  <div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body text-center">
+      <h3 class="mb-4 text-primary">Your Profile</h3>
+
+      <img src="{{ user.profile_picture.url }}" alt="Profile"
+           class="rounded-circle mb-3" width="120" height="120" style="object-fit: cover;">
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          {{ form.profile_picture.label_tag }}
+          {{ form.profile_picture }}
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Update Picture</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

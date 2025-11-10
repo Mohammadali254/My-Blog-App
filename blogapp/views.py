@@ -5,6 +5,8 @@ from django.views.generic import(
 )
 from .models import Post
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -13,10 +15,30 @@ class HomePageView(ListView):
     template_name = 'home.html'
     context_object_name = 'posts'
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'blogapp/post_detail.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        context['comments'] = post.comments.all().order_by('-created_at')
+        context['form'] = CommentForm()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('post_detail', pk = post.pk)
+        
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
