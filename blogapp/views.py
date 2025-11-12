@@ -14,6 +14,8 @@ class HomePageView(ListView):
     model = Post
     template_name = 'home.html'
     context_object_name = 'posts'
+    paginate_by = 5
+    ordering = ['created_at']
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
